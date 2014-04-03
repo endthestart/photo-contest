@@ -1,6 +1,11 @@
+from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+
+from easy_thumbnails.fields import ThumbnailerImageField
+from easy_thumbnails.files import get_thumbnailer
 
 
 class Profile(models.Model):
@@ -79,5 +84,37 @@ class Event(models.Model):
         verbose_name_plural = _("events")
 
 
-def photo_upload_to(event, filename):
-    return '{}/{}/{}'.format('root_dir', event, filename)
+def photo_upload_to(instance, filename):
+    return '{}/{}/{}'.format(settings.PHOTO_UPLOAD_TO, 'none', filename)
+
+def thumbnail_upload_to(instance, filename):
+    return '{}/{}/{}'.format(settings.PHOTO_UPLOAD_TO, 'none/thumbnails', filename)
+
+
+class Photo(models.Model):
+    photo = models.ImageField(
+        _("photo"),
+        upload_to=photo_upload_to,
+    )
+    thumbnail = ThumbnailerImageField(
+        upload_to=thumbnail_upload_to,
+        resize_source=dict(size=(100, 100)),
+        blank=True,
+        null=True,
+    )
+    event = models.ForeignKey(
+        Event,
+        blank=True,
+        null=True,
+    )
+    profile = models.ForeignKey(
+        Profile,
+        blank=True,
+        null=True,
+    )
+
+    @models.permalink
+    def get_absolute_url(self):
+        return reverse('photo_thumb', (), {
+            'photo_id': self.id,
+        })

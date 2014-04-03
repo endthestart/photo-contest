@@ -44,8 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photo_contest',
-    'multiuploader',
     'south',
+    'jfu',
+    'easy_thumbnails',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,11 +62,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
+    'django.core.context_processors.request',
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "multiuploader.context_processors.booleans",
 )
 
 ROOT_URLCONF = 'photo_contest.urls'
@@ -98,7 +99,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = normpath(join(SITE_ROOT, '../media'))
+MEDIA_ROOT = normpath(join(BASE_DIR, 'media'))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -109,7 +110,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = normpath(join(SITE_ROOT, '../static'))
+STATIC_ROOT = normpath(join(BASE_DIR, 'staticfiles'))
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -120,7 +121,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    normpath(join(SITE_ROOT, 'static')),
+    normpath(join(BASE_DIR, 'static')),
 )
 
 # List of finder classes that know how to find static files in
@@ -138,80 +139,5 @@ TEMPLATE_LOADERS = (
     #'django.template.loaders.eggs.Loader',
 )
 
-
-# Multiuploader
-MULTIUPLOADER_FILES_FOLDER = 'multiuploader'
-MULTIUPLOADER_FORMS_SETTINGS = {
-    'default': {
-        'FILE_TYPES': ["txt", "zip", "jpg", "jpeg", "flv", "png"],
-        'CONTENT_TYPES': [
-            'image/jpeg',
-            'image/png',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.ms-excel',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'application/vnd.ms-powerpoint',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            'application/vnd.oasis.opendocument.text',
-            'application/vnd.oasis.opendocument.spreadsheet',
-            'application/vnd.oasis.opendocument.presentation',
-            'text/plain',
-            'text/rtf',
-        ],
-        'MAX_FILE_SIZE': 10485760,
-        'MAX_FILE_NUMBER': 5,
-        'AUTO_UPLOAD': True,
-    },
-    'images': {
-        # 'FILE_TYPES': ['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp', 'tiff', 'ico'],
-        'FILE_TYPES': ['jpg', 'jpeg', 'png', 'gif'],
-        'CONTENT_TYPES': [
-            'image/gif',
-            'image/jpeg',
-            'image/pjpeg',
-            'image/png',
-            # 'image/svg+xml',
-            # 'image/tiff',
-            # 'image/vnd.microsoft.icon',
-            # 'image/vnd.wap.wbmp',
-        ],
-        'MAX_FILE_SIZE': 10485760,
-        'MAX_FILE_NUMBER': 10,
-        'AUTO_UPLOAD': True,
-    },
-    'video': {
-        'FILE_TYPES': ['flv', 'mpg', 'mpeg', 'mp4', 'avi', 'mkv', 'ogg', 'wmv', 'mov', 'webm'],
-        'CONTENT_TYPES': [
-            'video/mpeg',
-            'video/mp4',
-            'video/ogg',
-            'video/quicktime',
-            'video/webm',
-            'video/x-ms-wmv',
-            'video/x-flv',
-        ],
-        'MAX_FILE_SIZE': 10485760,
-        'MAX_FILE_NUMBER': 5,
-        'AUTO_UPLOAD': True,
-    },
-    'audio': {
-        'FILE_TYPES': ['mp3', 'mp4', 'ogg', 'wma', 'wax', 'wav', 'webm'],
-        'CONTENT_TYPES': [
-            'audio/basic',
-            'audio/L24',
-            'audio/mp4',
-            'audio/mpeg',
-            'audio/ogg',
-            'audio/vorbis',
-            'audio/x-ms-wma',
-            'audio/x-ms-wax',
-            'audio/vnd.rn-realaudio',
-            'audio/vnd.wave',
-            'audio/webm'
-        ],
-        'MAX_FILE_SIZE': 10485760,
-        'MAX_FILE_NUMBER': 5,
-        'AUTO_UPLOAD': True,
-    }
-}
+PHOTO_UPLOAD_TO = normpath(join(MEDIA_ROOT, 'photo_upload'))
+THUMBNAIL_BASEDIR = 'thumbs'
