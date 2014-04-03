@@ -1,3 +1,4 @@
 {% load thumbnail %}
 
-{% thumbnail photo.photo 50x50 %})
+<img src="{% thumbnail photo.thumbnail size %}" />
+{% thumbnail photo.thumbnail size %}

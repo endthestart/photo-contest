@@ -85,20 +85,13 @@ class Event(models.Model):
 
 
 def photo_upload_to(instance, filename):
-    return '{}/{}/{}'.format(settings.PHOTO_UPLOAD_TO, 'none', filename)
-
-def thumbnail_upload_to(instance, filename):
-    return '{}/{}/{}'.format(settings.PHOTO_UPLOAD_TO, 'none/thumbnails', filename)
+    return '{}/{}/{}'.format('photo_upload', 'none', filename)
 
 
 class Photo(models.Model):
-    photo = models.ImageField(
+    photo = ThumbnailerImageField(
         _("photo"),
         upload_to=photo_upload_to,
-    )
-    thumbnail = ThumbnailerImageField(
-        upload_to=thumbnail_upload_to,
-        resize_source=dict(size=(100, 100)),
         blank=True,
         null=True,
     )
@@ -115,6 +108,9 @@ class Photo(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return reverse('photo_thumb', (), {
-            'photo_id': self.id,
-        })
+        return reverse('photo_thumb', kwargs={'photo_id': self.id})
+
+    def get_thumbnail(self, height=100, width=100):
+        thumbnailer = get_thumbnailer(self.photo)
+        thumbnail_options = {'size': (height, width)}
+        return thumbnailer.get_thumbnail(thumbnail_options)

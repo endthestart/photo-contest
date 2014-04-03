@@ -20,17 +20,8 @@ def contest_home(request, template_name="contest_home.html"):
     return render_to_response(template_name, context, RequestContext(request))
 
 
-def thumb(request, photo_id=None, template_name="thumb.html"):
-    photo = get_object_or_404(Photo, id=photo_id)
-    context = {
-        'photo': photo,
-    }
-    return render_to_response(template_name, context, RequestContext(request))
-
-
 @require_POST
 def jfu_upload(request):
-    #import pdb; pdb.set_trace()
     uploaded_file = upload_receive(request)
 
     instance = Photo(photo=uploaded_file)
@@ -42,11 +33,16 @@ def jfu_upload(request):
         'name': basename,
         'size': uploaded_file.size,
 
-        'url': settings.MEDIA_URL + 'photo_upload/none/' + basename,
-        'thumbnailUrl': instance.get_absolute_url()
+        'url': instance.photo.url,
+        'thumbnailUrl': instance.get_thumbnail().url,
 
         #'deleteUrl': reverse('jfu_delete', kwargs={'pk': instance.pk}),
         #'deleteType': 'POST',
     }
 
     return UploadResponse(request, file_dict)
+
+
+def wors(request, template_name="base.html"):
+    context = {}
+    return render_to_response(template_name, context, RequestContext(request))

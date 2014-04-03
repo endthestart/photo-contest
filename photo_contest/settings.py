@@ -5,6 +5,7 @@ from sys import path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 ########## PATH CONFIGURATION
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -140,4 +141,3 @@ TEMPLATE_LOADERS = (
 )
 
 PHOTO_UPLOAD_TO = normpath(join(MEDIA_ROOT, 'photo_upload'))
-THUMBNAIL_BASEDIR = 'thumbs'

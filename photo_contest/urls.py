@@ -10,10 +10,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'photo_contest.views.contest_home', name='contest_home'),
+    url(r'^wors/$', 'photo_contest.views.wors', name='wors'),
     url(r'^upload/$', jfu_upload, name='jfu_upload'),
-    url(r'^thumb/(?P<photo_id>\d+)/$', thumb, name='photo_thumb'),
-
-    # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
