@@ -70,7 +70,9 @@ class Event(models.Model):
 
     def save(self, **kwargs):
         if self.title and not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.title)
+
+        super(Event, self).save(**kwargs)
 
     @models.permalink
     def get_absolute_url(self):
@@ -85,7 +87,7 @@ class Event(models.Model):
 
 
 def photo_upload_to(instance, filename):
-    return '{}/{}/{}'.format('photo_upload', 'none', filename)
+    return '{}/{}/{}'.format('photo_upload', instance.event, filename)
 
 
 class Photo(models.Model):
