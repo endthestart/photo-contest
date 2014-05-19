@@ -7,5 +7,11 @@ class EventForm(forms.Form):
 
 
 class ProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+
+        for fieldname in self.fields:
+            self.fields[fieldname].help_text = None
+
     class Meta:
         model = Profile

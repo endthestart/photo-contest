@@ -1,4 +1,9 @@
-<form action="" method="post">{% csrf_token %}
-    {{ form }}
-    <input type="submit" name="next" />
-</form>
+{% extends 'skeleton_base.html' %}
+{% load jfutags %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {{ form }}
+        <input type="submit" name="next" />
+    </form>
+{% endblock %}

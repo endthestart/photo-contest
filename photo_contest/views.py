@@ -50,7 +50,7 @@ def jfu_upload(request):
     return UploadResponse(request, file_dict)
 
 
-def wors(request, template_name="base.html"):
+def submit(request, template_name="submit.html"):
     if not request.session.get('profile_id', None):
         return HttpResponseRedirect(reverse('profile'))
     event = get_object_or_404(Event, id=request.session['event_id'])
@@ -82,6 +82,6 @@ def profile_view(request, template_name="profile.html"):
         if form.is_valid():
             profile = form.save()
             request.session['profile_id'] = profile.id
-            return HttpResponseRedirect(reverse('wors'))
+            return HttpResponseRedirect(reverse('submit'))
     context = {'form': form,}
     return render_to_response(template_name, context, RequestContext(request))

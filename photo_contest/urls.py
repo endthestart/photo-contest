@@ -10,7 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'photo_contest.views.contest_home', name='contest_home'),
-    url(r'^wors/$', 'photo_contest.views.wors', name='wors'),
+    url(r'^submit/$', 'photo_contest.views.submit', name='submit'),
     url(r'^event/$', 'photo_contest.views.event_view', name='event'),
     url(r'^profile/$', 'photo_contest.views.profile_view', name='profile'),
     url(r'^upload/$', 'photo_contest.views.jfu_upload', name='jfu_upload'),
