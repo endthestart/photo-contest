@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     url(r'^event/$', 'photo_contest.views.event_view', name='event'),
     url(r'^profile/$', 'photo_contest.views.profile_view', name='profile'),
     url(r'^upload/$', 'photo_contest.views.jfu_upload', name='jfu_upload'),
+    url(r'^gallery/$', 'photo_contest.views.gallery', name='gallery'),
+    url(r'^about/$', 'photo_contest.views.about', name='about'),
+    url(r'^contact/$', 'photo_contest.views.contact', name='contact'),
 
     url(r'^admin/', include(admin.site.urls)),
 )
